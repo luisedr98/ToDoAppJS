@@ -1,6 +1,6 @@
-# WEBPACK INIT 
+# APP JS TODO
 
-Este proyecto contiene las configuraciones iniciales para desarrollar proyectos de JS con NodeJS.
+Este proyecto contiene las clases necesarias para el funcionamiento de la aplicación TODO
 
 Es importante descargar todas las dependencias.
 
