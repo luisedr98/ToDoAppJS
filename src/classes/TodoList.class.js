@@ -1,21 +1,23 @@
-export class TodoList{
-    constructor (){
-        this.todos = []
+export class TodoList {
+    constructor() {
+        this.todos = [];
     }
 
-    nuevoTodo(todo){
+    nuevoTodo(todo) {
         this.todos.push(todo);
     }
 
-    eliminarTodo(id){
-
+    eliminarTodo(id) { 
+        this.todos = this.todos.filter(todo => todo.id != id);
     }
 
-    marcarCompletado (id){
-
+    marcarCompletado(id) {
+        for (const todo of this.todos) {
+            if (id == todo.id) {
+                todo.completado = !todo.completado;
+            }
+        }
     }
 
-    eliminarCompletados(){
-        
-    }
+    eliminarCompletados() { }
 }
