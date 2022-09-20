@@ -4,6 +4,9 @@ import { todoList } from "../index.js";
 //referencia al documento
 const list = document.querySelector(".todo-list");
 const imputTodo = document.querySelector(".new-todo");
+const btnBorrar = document.querySelector('.clear-completed');
+const ulFilters = document.querySelector('.filters');
+const anchorFilters = document.querySelectorAll('.filtro');
 
 //funciones
 export const crearHTML = (todo) => {
@@ -31,7 +34,6 @@ imputTodo.addEventListener("keyup", (event) => {
         const todoCreado = new Todo(imputTodo.value);
         todoList.nuevoTodo(todoCreado);
         crearHTML(todoCreado);
-        console.log(todoList);
         imputTodo.value = "";
     }
 });
@@ -41,7 +43,7 @@ list.addEventListener('click', (event)=>{
     const nombreElemento = event.target.localName; //define si es label, buton, imput
     const todoElemento = event.target.parentElement.parentElement; //obtiene el HTML del elemento
     const todoId = todoElemento.getAttribute('data-id');
-
+    
     if (nombreElemento.includes('input')){
         todoList.marcarCompletado(todoId);
         todoElemento.classList.toggle('completed');
@@ -49,5 +51,44 @@ list.addEventListener('click', (event)=>{
         todoList.eliminarTodo(todoId);
         list.removeChild(todoElemento);
     }
+});
+
+btnBorrar.addEventListener('click', () => {
+    todoList.eliminarCompletados();
+    for (let i = list.children.length - 1 ; i >= 0; i--) {
+        if (list.children[i].classList.contains('completed')){
+            list.children[i].remove();
+        };
+    }
     console.log(todoList);
+    
+});
+
+ulFilters.addEventListener('click', (event)=> {
+    const textSelected = event.target.text;
+    if (!textSelected ) { return;}
+
+    anchorFilters.forEach(element => {
+        element.classList.remove('selected');
+    })
+
+    event.target.classList.add('selected');
+
+    for (const elemento of list.children) {
+        elemento.classList.remove('hidden');
+        const completado = elemento.classList.contains('completed');
+        switch (textSelected) {
+        case "Pendientes":
+            if (completado) {
+                elemento.classList.add('hidden');
+            }
+            break;
+        case "Completados":
+            if (!completado){
+                elemento.classList.add('hidden');
+            }
+            break;
+    }
+    }
+    
 });
