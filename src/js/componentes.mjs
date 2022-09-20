@@ -1,15 +1,24 @@
+//referencia al documento
+const todoList = document.querySelector('.todo-list');
 
-import '../css/componentes.css';
-// import webpackLogo from '../assets/img/webpack-logo.png';
 
-export const saludar = ( nombre ) => {
-    console.log('Crendo una etiqueta h1');
-    const h1 = document.createElement('h1');
-    h1.innerText = `Hola como estas ${nombre} !!!`;
-    document.body.append(h1);
 
-    // const img = document.createElement('img');
-    // img.src = webpackLogo;
-    // document.body.append(img);
+export const crearHTML = (todo) => {
+
+    const htmlTodo = `
+    <li class="${(todo.completado) ?'completed' : ''}" data-id="${todo.id}">
+    <div class="view">
+        <input class="toggle" type="checkbox" ${(todo.completado) ? 'checked' : ''}>
+            <label>${todo.tarea}</label>
+            <button class="destroy"></button>
+    </div>
+    <input class="edit" value="Create a TodoMVC template">
+    </li>`;
+
+    const div = document.createElement('div');
+    div.innerHTML = htmlTodo;
+    todoList.append(div.firstElementChild);
+
+    return div.firstElementChild;
 
 }
